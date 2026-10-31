@@ -1,0 +1,7 @@
+with new as (select id, recordDate, temperature,
+lag(temperature ,1) over (order by recordDate )as t,
+LAG(recordDate, 1) OVER (ORDER BY recordDate) AS prev_date
+from Weather )
+select id
+from new where temperature > t
+AND DATEDIFF(recordDate, prev_date) = 1;
